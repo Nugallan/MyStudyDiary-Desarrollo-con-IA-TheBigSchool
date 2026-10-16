@@ -1,6 +1,6 @@
 # Diario de Estudio
 
-Web estática para registrar tus sesiones de estudio y ver tu constancia de un vistazo: racha actual, mejor racha, minutos de la semana, días del mes y un mapa de calor de las últimas 12 semanas.
+Web estática desarrollada con opencode para registrar tus sesiones de estudio y ver tu constancia de un vistazo: racha actual, mejor racha, minutos de la semana, días del mes y un mapa de calor de las últimas 12 semanas.
 
 ## Funcionalidades
 
