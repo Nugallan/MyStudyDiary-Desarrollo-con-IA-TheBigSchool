@@ -9,6 +9,7 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - v1.2: además se muestran los minutos totales de la semana en curso.
 - v1.3: además se muestran los días únicos estudiados en el mes en curso.
 - Datos en localStorage.
+- Herramientas: `opencode.json` define el MCP local `chrome-devtools` (bajo `mcp.servers`, forma V2) para inspeccionar la web en el navegador.
 
 ## Decisiones (y por qué)
 
