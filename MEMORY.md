@@ -26,6 +26,7 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - Mes natural en curso (del 1 al último día del mes de hoy), incluidas fechas futuras del mismo mes, por coherencia con la semana.
 - Repo git en la rama `main`, con `.gitattributes` (`* text=auto eol=lf`) para evitar el ruido CRLF/LF de Windows.
 - Los tests son la puerta para la lógica pura (`node --test`, incluido en Node, sin instalar paquetes); la verificación manual en el navegador sigue para lo visual.
+- La lógica del mapa de calor irá en un `logic.js` puro (sin DOM ni `localStorage`, recibe `todayISO`) para poder probarla con `node --test`; es el único archivo nuevo además de los tests.
 
 ## Identidad visual
 
@@ -39,6 +40,6 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 
 ## Próximos pasos
 
-- Spec 001 "mapa de calor de constancia" en `specs/001-heat-map/spec.md` (revisión 2: ambigüedades, contradicciones y casos límite resueltos, sin dudas abiertas); pendiente de aprobación antes de escribir el plan.
+- Spec 001 "mapa de calor de constancia" (`specs/001-heat-map/spec.md`, revisión 2) y su plan (`specs/001-heat-map/plan.md`) listos; pendiente de aprobación antes de implementar.
 - Probado manualmente con chrome-devtools: 3 sesiones consecutivas → racha 3, mejor 3, semana 135 min, mes 3 días, consola limpia y persistencia OK.
 - Pendiente: en móvil (375px) los tres datos de `.stats` van en 3 columnas de ~83px y "135 minutos" se parte en 2 líneas; valorar apilar `.stats` a 1 columna en el breakpoint de 560px.
