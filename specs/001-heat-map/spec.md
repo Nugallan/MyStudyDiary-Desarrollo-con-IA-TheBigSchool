@@ -37,7 +37,7 @@ Notación EARS usada: **(Ubicuo)** siempre, **(Evento)** cuando ocurre algo, **(
 **RF-3 - Un día, una celda.**
 - (Ubicuo) El sistema debe representar con exactamente una celda cada fecha local comprendida en la ventana.
 - (Evento) Cuando varias sesiones comparten la misma fecha, la celda debe reflejar la suma de sus minutos.
-- Criterio: dos sesiones de 20 y 25 minutos el mismo día producen una celda de 55 minutos.
+- Criterio: dos sesiones de 20 y 25 minutos el mismo día producen una celda de 45 minutos.
 
 **RF-4 - Intensidad por umbrales fijos.**
 - (Ubicuo) El sistema debe clasificar cada día en uno de cinco niveles según sus minutos totales (número entero ≥ 0):

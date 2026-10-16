@@ -189,7 +189,7 @@ Propiedades del algoritmo:
 | `buildHeatMap` devuelve 84 celdas en 12 semanas de 7 días | RF-2 |
 | Primera celda = lunes 11 semanas antes; última = domingo de la semana de hoy | RF-2 |
 | `todayISO` en lunes y en domingo; semana que cruza de mes y de año | RF-2, RF-9 |
-| Varias sesiones el mismo día se suman (20 + 25 = 55) | RF-3 |
+| Varias sesiones el mismo día se suman (20 + 25 = 45) | RF-3 |
 | Día sin sesiones y día con 0 minutos → nivel 0 | RF-5 |
 | `formatMinutes` con 1 y con 45; `formatDetail` con y sin minutos | RF-6 |
 | Sesión futura dentro de la semana → su celda refleja los minutos | RF-8 |

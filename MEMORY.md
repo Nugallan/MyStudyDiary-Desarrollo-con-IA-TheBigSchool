@@ -40,6 +40,6 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 
 ## Próximos pasos
 
-- Spec 001 "mapa de calor de constancia" (`specs/001-heat-map/spec.md`, revisión 2) y su plan (`specs/001-heat-map/plan.md`) listos; pendiente de aprobación antes de implementar.
+- Spec 001 "mapa de calor de constancia": `spec.md` (rev. 2), `plan.md` y `tasks.md` listos; **T1 hecha** (`logic.js` puro + `logic.test.js`, `node --test` 20/20). Siguiente: T2 (`index.html`).
 - Probado manualmente con chrome-devtools: 3 sesiones consecutivas → racha 3, mejor 3, semana 135 min, mes 3 días, consola limpia y persistencia OK.
 - Pendiente: en móvil (375px) los tres datos de `.stats` van en 3 columnas de ~83px y "135 minutos" se parte en 2 líneas; valorar apilar `.stats` a 1 columna en el breakpoint de 560px.
