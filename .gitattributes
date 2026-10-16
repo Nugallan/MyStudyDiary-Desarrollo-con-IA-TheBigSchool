@@ -1,0 +1,2 @@
+# Normaliza a LF en el repo y en el checkout, e ignora el core.autocrlf de Windows.
+* text=auto eol=lf
