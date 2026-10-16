@@ -47,3 +47,4 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 
 - Spec 001 "mapa de calor de constancia": **completa** (T1–T6). `logic.js` + `logic.test.js` (`node --test` 20/20) y la interfaz listos; verificado con chrome-devtools (84 celdas, niveles, detalle, consola limpia, 375 px sin desbordes) y persistencia OK (3 sesiones → racha 3, mejor 3, semana 135 min, mes 3 días).
 - Arreglado el apretado de `.stats` en móvil: a 375 px una columna, las tres cifras en una línea y sin desbordes (a 1280 px sigue en 3 columnas).
+- Auditoría de la spec 001 RF por RF (2026-10-17): todo cumplido; único hueco, la leyenda no decía "sin estudio (0 min)", ya corregido y verificado.
