@@ -66,6 +66,7 @@ h2 {
 
 /* Las secciones se separan con renglones, como en un cuaderno. */
 .streak-card,
+.heat-card,
 .form-card,
 .list-card {
   display: flex;
@@ -271,6 +272,87 @@ input:focus-visible {
   display: none;
 }
 
+/* Mapa de calor: los días como marcas de intensidad sobre la hoja. */
+.heatmap {
+  display: flex;
+  gap: 3px;
+  max-width: 28rem;
+}
+
+.heat-week {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.heat-cell,
+.heat-swatch {
+  display: block;
+  border-radius: 2px;
+  background: #e6eae2;
+}
+
+.heat-cell {
+  aspect-ratio: 1 / 1;
+}
+
+.heat-swatch {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.heat-cell.level-0,
+.heat-swatch.level-0 {
+  background: #e6eae2;
+}
+
+.heat-cell.level-1,
+.heat-swatch.level-1 {
+  background: #b9ccd3;
+}
+
+.heat-cell.level-2,
+.heat-swatch.level-2 {
+  background: #82a2ae;
+}
+
+.heat-cell.level-3,
+.heat-swatch.level-3 {
+  background: #4a6f7e;
+}
+
+.heat-cell.level-4,
+.heat-swatch.level-4 {
+  background: #1b2a31;
+}
+
+.heat-detail {
+  min-height: 1.3em;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.heat-detail:empty {
+  visibility: hidden;
+}
+
+.heat-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.85rem;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.heat-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
 @media (max-width: 560px) {
   .streak-card {
     grid-template-columns: 1fr;
@@ -287,5 +369,41 @@ input:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;
+  }
+}
+
+/* Con colores forzados el fondo se pierde: los niveles se distinguen por el trazo
+   (de contorno fino y discontinuo a relleno), que el sistema sí conserva. */
+@media (forced-colors: active) {
+
+  .heat-cell,
+  .heat-swatch {
+    background: Canvas;
+  }
+
+  .heat-cell.level-0,
+  .heat-swatch.level-0 {
+    border: 1px dotted CanvasText;
+  }
+
+  .heat-cell.level-1,
+  .heat-swatch.level-1 {
+    border: 1px dashed CanvasText;
+  }
+
+  .heat-cell.level-2,
+  .heat-swatch.level-2 {
+    border: 2px solid CanvasText;
+  }
+
+  .heat-cell.level-3,
+  .heat-swatch.level-3 {
+    border: 3px solid CanvasText;
+  }
+
+  .heat-cell.level-4,
+  .heat-swatch.level-4 {
+    background: CanvasText;
+    border: 1px solid CanvasText;
   }
 }

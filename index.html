@@ -33,6 +33,19 @@
       </dl>
     </section>
 
+    <section class="heat-card">
+      <h2>Últimas 12 semanas</h2>
+      <div id="heatmap" class="heatmap" role="group" aria-label="Días estudiados de las últimas 12 semanas"></div>
+      <p id="heatmapDetail" class="heat-detail" aria-live="polite"></p>
+      <div class="heat-legend" role="list" aria-label="Minutos estudiados al día, de menos a más">
+        <span class="heat-legend-item" role="listitem"><i class="heat-swatch level-0" aria-hidden="true"></i>0 min</span>
+        <span class="heat-legend-item" role="listitem"><i class="heat-swatch level-1" aria-hidden="true"></i>1–29 min</span>
+        <span class="heat-legend-item" role="listitem"><i class="heat-swatch level-2" aria-hidden="true"></i>30–59 min</span>
+        <span class="heat-legend-item" role="listitem"><i class="heat-swatch level-3" aria-hidden="true"></i>60–119 min</span>
+        <span class="heat-legend-item" role="listitem"><i class="heat-swatch level-4" aria-hidden="true"></i>≥120 min</span>
+      </div>
+    </section>
+
     <section class="form-card">
       <h2>Nueva sesión</h2>
       <form id="sessionForm" novalidate>
@@ -63,6 +76,7 @@
     </section>
   </main>
 
+  <script src="logic.js"></script>
   <script src="app.js"></script>
 </body>
 

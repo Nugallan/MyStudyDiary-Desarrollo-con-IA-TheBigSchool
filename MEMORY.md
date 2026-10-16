@@ -8,6 +8,7 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - v1.1: además se muestra la "mejor racha" (máximo histórico de días consecutivos).
 - v1.2: además se muestran los minutos totales de la semana en curso.
 - v1.3: además se muestran los días únicos estudiados en el mes en curso.
+- v1.4: además se muestra un mapa de calor de constancia de las últimas 12 semanas.
 - Datos en localStorage.
 - Herramientas: `opencode.json` define el MCP local `chrome-devtools` (bajo `mcp.servers`, forma V2) para inspeccionar la web en el navegador.
 
@@ -26,7 +27,10 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - Mes natural en curso (del 1 al último día del mes de hoy), incluidas fechas futuras del mismo mes, por coherencia con la semana.
 - Repo git en la rama `main`, con `.gitattributes` (`* text=auto eol=lf`) para evitar el ruido CRLF/LF de Windows.
 - Los tests son la puerta para la lógica pura (`node --test`, incluido en Node, sin instalar paquetes); la verificación manual en el navegador sigue para lo visual.
-- La lógica del mapa de calor irá en un `logic.js` puro (sin DOM ni `localStorage`, recibe `todayISO`) para poder probarla con `node --test`; es el único archivo nuevo además de los tests.
+- La lógica del mapa de calor vive en `logic.js` puro (sin DOM ni `localStorage`, recibe `todayISO`) y se prueba en `logic.test.js` (`node --test`); es el único archivo nuevo además de los tests.
+- Mapa de calor: ventana fija de 12 semanas naturales (lunes–domingo) que termina en la semana de hoy, con umbrales de minutos enteros 0 / 1–29 / 30–59 / 60–119 / ≥120; reglas fáciles de explicar y de testear, sin configuración.
+- El detalle del día se muestra por celda (`aria-label` + línea de detalle) con puntero y toque; se renuncia a la navegación por teclado celda a celda para no añadir 84 paradas de tabulador.
+- En colores forzados los niveles se distinguen por el trazo (punteado → discontinuo → 2 px → 3 px → relleno): Chrome fuerza `background-image` a `none` y las tramas no se veían.
 
 ## Identidad visual
 
@@ -40,6 +44,6 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 
 ## Próximos pasos
 
-- Spec 001 "mapa de calor de constancia": `spec.md` (rev. 2), `plan.md` y `tasks.md` listos; **T1 hecha** (`logic.js` puro + `logic.test.js`, `node --test` 20/20). Siguiente: T2 (`index.html`).
-- Probado manualmente con chrome-devtools: 3 sesiones consecutivas → racha 3, mejor 3, semana 135 min, mes 3 días, consola limpia y persistencia OK.
-- Pendiente: en móvil (375px) los tres datos de `.stats` van en 3 columnas de ~83px y "135 minutos" se parte en 2 líneas; valorar apilar `.stats` a 1 columna en el breakpoint de 560px.
+- Spec 001 "mapa de calor de constancia": **completa** (T1–T6). `logic.js` + `logic.test.js` (`node --test` 20/20) y la interfaz listos; verificado con chrome-devtools (84 celdas, niveles, detalle, consola limpia y 375 px sin desbordes).
+- Probado con chrome-devtools: 3 sesiones consecutivas → racha 3, mejor 3, semana 135 min, mes 3 días, persistencia OK.
+- Pendiente (ajeno a la spec): en móvil (375 px) los tres datos de `.stats` van en 3 columnas y "135 minutos" se parte en 2 líneas; valorar apilar `.stats` a 1 columna en el breakpoint de 560 px.

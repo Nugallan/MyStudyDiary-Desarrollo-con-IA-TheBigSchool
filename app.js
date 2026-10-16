@@ -10,6 +10,8 @@ const weekMinutesEl = document.getElementById("weekMinutes");
 const monthDaysEl = document.getElementById("monthDays");
 const sessionsListEl = document.getElementById("sessionsList");
 const emptyStateEl = document.getElementById("emptyState");
+const heatmapEl = document.getElementById("heatmap");
+const heatmapDetailEl = document.getElementById("heatmapDetail");
 
 let sessions = [];
 
@@ -40,13 +42,6 @@ function loadSessions() {
 
 function saveSessions() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
-}
-
-function formatDisplayDate(isoDate) {
-  const parts = isoDate.split("-");
-  if (parts.length !== 3) return isoDate;
-  const [year, month, day] = parts;
-  return `${day}/${month}/${year}`;
 }
 
 function addSession(isoDate, topic, minutes) {
@@ -95,7 +90,7 @@ function renderSessions() {
 
     const minutesEl = document.createElement("span");
     minutesEl.className = "session-minutes";
-    minutesEl.textContent = `${session.minutes} ${session.minutes === 1 ? "minuto" : "minutos"}`;
+    minutesEl.textContent = formatMinutes(session.minutes);
 
     header.appendChild(dateEl);
     header.appendChild(minutesEl);
@@ -194,13 +189,6 @@ function countBestStreak() {
   return best;
 }
 
-function toISODate(date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
-
 function getWeekRange() {
   const now = new Date();
   const offsetToMonday = (now.getDay() + 6) % 7;
@@ -245,6 +233,43 @@ function updateMonthDays() {
   monthDaysEl.textContent = `${count} ${count === 1 ? "día" : "días"}`;
 }
 
+function renderHeatMap() {
+  const heatMap = buildHeatMap(sessions, getTodayISO());
+  heatmapEl.innerHTML = "";
+
+  for (const week of heatMap.weeks) {
+    const weekEl = document.createElement("div");
+    weekEl.className = "heat-week";
+
+    for (const day of week) {
+      const cellEl = document.createElement("div");
+      cellEl.className = `heat-cell level-${day.level}`;
+      cellEl.dataset.date = day.date;
+      cellEl.dataset.minutes = String(day.minutes);
+      cellEl.setAttribute("role", "img");
+      cellEl.setAttribute("aria-label", formatDetail(day.date, day.minutes));
+      weekEl.appendChild(cellEl);
+    }
+
+    heatmapEl.appendChild(weekEl);
+  }
+}
+
+function showHeatDetail(cellEl) {
+  const date = cellEl.dataset.date;
+  const minutes = Number(cellEl.dataset.minutes);
+  heatmapDetailEl.textContent = formatDetail(date, minutes);
+}
+
+function hideHeatDetail() {
+  heatmapDetailEl.textContent = "";
+}
+
+function updateHeatMap() {
+  renderHeatMap();
+  hideHeatDetail();
+}
+
 function updateStreaks() {
   const currentStreak = countStreak();
   const bestStreak = Math.max(countBestStreak(), currentStreak);
@@ -279,6 +304,7 @@ function handleSubmit(event) {
   updateStreaks();
   updateWeekTotal();
   updateMonthDays();
+  updateHeatMap();
   topicInput.focus();
 }
 
@@ -289,7 +315,29 @@ function init() {
   updateStreaks();
   updateWeekTotal();
   updateMonthDays();
+  updateHeatMap();
 }
 
 form.addEventListener("submit", handleSubmit);
+
+heatmapEl.addEventListener("pointerover", (event) => {
+  const cell = event.target.closest(".heat-cell");
+  if (cell) {
+    showHeatDetail(cell);
+  }
+});
+
+heatmapEl.addEventListener("click", (event) => {
+  const cell = event.target.closest(".heat-cell");
+  if (cell) {
+    showHeatDetail(cell);
+  }
+});
+
+document.addEventListener("click", (event) => {
+  if (!heatmapEl.contains(event.target)) {
+    hideHeatDetail();
+  }
+});
+
 init();

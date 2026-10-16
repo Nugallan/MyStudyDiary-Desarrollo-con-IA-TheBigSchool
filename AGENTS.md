@@ -5,7 +5,7 @@
 Web estática y sencilla de "Diario de Estudio" para registrar sesiones de estudio y ver la racha actual. HTML, CSS y JavaScript puros, sin frameworks, sin herramientas de compilación y sin dependencias.
 
 - **Ubicación**: `MyStudyDiary/` (dentro de este workspace)
-- **Archivos**: `index.html`, `styles.css` y `app.js`, más los tests `*.test.js`
+- **Archivos**: `index.html`, `styles.css`, `app.js` y `logic.js` (lógica pura), más los tests `*.test.js`
 - **Ejecución**: abriendo `index.html` directamente en el navegador (funciona con `file://`)
 
 ## Ejecutar / verificar
@@ -15,6 +15,7 @@ No hay build, lint ni typecheck. La lógica pura se prueba con `node --test` (si
 1. Abrir `index.html` en el navegador (doble clic)
 2. Añadir una sesión con fecha (por defecto hoy), tema y minutos > 0
 3. Comprobar la racha, el orden de la lista (más reciente primero) y que `localStorage` persiste al recargar
+4. Comprobar el mapa de calor de las últimas 12 semanas (niveles por minutos y detalle al pasar el puntero o tocar)
 
 ## Comportamiento clave que hay que conservar
 
@@ -24,18 +25,20 @@ No hay build, lint ni typecheck. La lógica pura se prueba con `node --test` (si
 - **Orden de las sesiones**: ordenadas por fecha descendente y, en caso de empate, por `createdAt` descendente (más reciente primero).
 - **Minutos de la semana**: suma de los minutos de las sesiones cuya fecha cae en la semana natural en curso (lunes–domingo, fechas locales). Se deriva de las sesiones y no añade datos nuevos a `localStorage`. Incluye cualquier sesión con fecha dentro del rango, incluso futura dentro de la misma semana.
 - **Días del mes**: número de días únicos con al menos una sesión cuya fecha cae en el mes natural en curso (fechas locales). Se deriva de las sesiones y no añade datos nuevos a `localStorage`. Incluye cualquier sesión con fecha dentro del mes, incluso futura dentro del mismo mes. Varias sesiones el mismo día cuentan como un solo día.
+- **Mapa de calor**: ventana fija de 12 semanas naturales (lunes–domingo) que termina en la semana de hoy, con una celda por día. Cinco niveles por minutos enteros del día: 0 (sin estudio), 1–29, 30–59, 60–119 y ≥120. Es de solo lectura: se deriva de las sesiones y no añade datos nuevos a `localStorage`; las sesiones fuera de la ventana no aparecen. El detalle de cada día se muestra al pasar el puntero o tocar y se oculta al tocar fuera. Se recalcula con "hoy" al cargar y al guardar (sin temporizadores).
 - **Persistencia**: `localStorage` con la clave `diario-estudio-sessions` guarda un array de objetos de sesión `{ id, date, topic, minutes, createdAt }`.
 - **Validación**: `required` + `min="1"` en HTML; el formulario usa `novalidate` para evitar los mensajes del navegador; el JS también valida.
 - **UX**: tras guardar, el formulario se reinicia pero la fecha vuelve a hoy; el foco va al campo de tema.
 
 ## Notas de arquitectura
 
-- Punto de entrada: `index.html` carga `styles.css` y `app.js` al final.
+- Punto de entrada: `index.html` carga `styles.css`, `logic.js` y `app.js` al final.
 - En `app.js` los elementos del DOM se obtienen por id (deben existir).
 - El cálculo de la racha construye un Set de días estudiados, elige el ancla (hoy o ayer) y recorre hacia atrás contando días consecutivos presentes.
 - La mejor racha usa ese mismo Set de días: lo ordena y recorre midiendo el tramo consecutivo más largo.
 - Los minutos de la semana se calculan con `getWeekRange()` (semana local de lunes a domingo que contiene hoy) y se suman con `countWeekMinutes()`; `updateWeekTotal()` los pinta.
 - Los días del mes se calculan reutilizando `getDayKeysSet()` (días únicos) y comparando el prefijo `"AAAA-MM"` del mes en curso con `getCurrentMonthPrefix()`; `countMonthDays()` los cuenta y `updateMonthDays()` los pinta.
+- La lógica pura (fechas y mapa de calor) vive en `logic.js`, sin DOM ni `localStorage`, y recibe "hoy" como parámetro; funciona igual en el navegador (funciones globales) y en Node (`module.exports`). `app.js` solo pinta y guarda: `renderHeatMap()` crea las celdas con `buildHeatMap()` y las etiqueta con `formatDetail()`.
 
 ## Forma de trabajar
 
