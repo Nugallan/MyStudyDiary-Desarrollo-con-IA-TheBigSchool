@@ -73,7 +73,8 @@ h2 {
 }
 
 .best-streak,
-.week-total {
+.week-total,
+.month-days {
   text-align: center;
   font-size: 0.95rem;
   color: var(--text-secondary);

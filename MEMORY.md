@@ -7,6 +7,7 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - v1 funcionando: registrar sesiones (fecha, tema, minutos), racha actual y lista de sesiones.
 - v1.1: además se muestra la "mejor racha" (máximo histórico de días consecutivos).
 - v1.2: además se muestran los minutos totales de la semana en curso.
+- v1.3: además se muestran los días únicos estudiados en el mes en curso.
 - Datos en localStorage.
 
 ## Decisiones (y por qué)
@@ -20,6 +21,8 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - Cuentan las sesiones con fecha dentro del rango, incluida una futura de la misma semana: no hay concepto de "planificado" y todo se deriva de los datos.
 - Los minutos se muestran con pluralización (`1 minuto` / `125 minutos`) para ser coherentes con la lista.
 - El total se muestra dentro de la tarjeta de racha, bajo la mejor racha, sin crear estructura nueva.
+- "Días del mes" cuenta días únicos (no sesiones): reutiliza `getDayKeysSet()` y compara el prefijo `"AAAA-MM"` del mes de hoy; así dos sesiones el mismo día cuentan una vez.
+- Mes natural en curso (del 1 al último día del mes de hoy), incluidas fechas futuras del mismo mes, por coherencia con la semana.
 - Repo git en la rama `main`, con `.gitattributes` (`* text=auto eol=lf`) para evitar el ruido CRLF/LF de Windows.
 
 ## Aprendizajes y errores a evitar

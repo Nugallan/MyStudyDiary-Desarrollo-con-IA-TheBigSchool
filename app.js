@@ -7,6 +7,7 @@ const minutesInput = document.getElementById("minutesInput");
 const streakCountEl = document.getElementById("streakCount");
 const bestStreakCountEl = document.getElementById("bestStreakCount");
 const weekMinutesEl = document.getElementById("weekMinutes");
+const monthDaysEl = document.getElementById("monthDays");
 const sessionsListEl = document.getElementById("sessionsList");
 const emptyStateEl = document.getElementById("emptyState");
 
@@ -224,6 +225,26 @@ function updateWeekTotal() {
   weekMinutesEl.textContent = `${total} ${total === 1 ? "minuto" : "minutos"}`;
 }
 
+function getCurrentMonthPrefix() {
+  return getTodayISO().slice(0, 7);
+}
+
+function countMonthDays() {
+  const prefix = getCurrentMonthPrefix();
+  let count = 0;
+  for (const day of getDayKeysSet()) {
+    if (day.startsWith(prefix)) {
+      count += 1;
+    }
+  }
+  return count;
+}
+
+function updateMonthDays() {
+  const count = countMonthDays();
+  monthDaysEl.textContent = `${count} ${count === 1 ? "día" : "días"}`;
+}
+
 function updateStreaks() {
   const currentStreak = countStreak();
   const bestStreak = Math.max(countBestStreak(), currentStreak);
@@ -257,6 +278,7 @@ function handleSubmit(event) {
   renderSessions();
   updateStreaks();
   updateWeekTotal();
+  updateMonthDays();
   topicInput.focus();
 }
 
@@ -266,6 +288,7 @@ function init() {
   renderSessions();
   updateStreaks();
   updateWeekTotal();
+  updateMonthDays();
 }
 
 form.addEventListener("submit", handleSubmit);

@@ -23,6 +23,7 @@ No existen comandos de build, test, lint ni typecheck. Para verificar:
 - **Mejor racha**: el tramo de días consecutivos con sesión más largo de todo el historial, calculado con las mismas fechas locales. No aplica la regla "sigue viva" (esa es solo para la racha actual): es un máximo histórico y se conserva aunque la racha actual se rompa. Se deriva de las sesiones y no añade datos nuevos a `localStorage`. La interfaz muestra `max(mejor racha, racha actual)`.
 - **Orden de las sesiones**: ordenadas por fecha descendente y, en caso de empate, por `createdAt` descendente (más reciente primero).
 - **Minutos de la semana**: suma de los minutos de las sesiones cuya fecha cae en la semana natural en curso (lunes–domingo, fechas locales). Se deriva de las sesiones y no añade datos nuevos a `localStorage`. Incluye cualquier sesión con fecha dentro del rango, incluso futura dentro de la misma semana.
+- **Días del mes**: número de días únicos con al menos una sesión cuya fecha cae en el mes natural en curso (fechas locales). Se deriva de las sesiones y no añade datos nuevos a `localStorage`. Incluye cualquier sesión con fecha dentro del mes, incluso futura dentro del mismo mes. Varias sesiones el mismo día cuentan como un solo día.
 - **Persistencia**: `localStorage` con la clave `diario-estudio-sessions` guarda un array de objetos de sesión `{ id, date, topic, minutes, createdAt }`.
 - **Validación**: `required` + `min="1"` en HTML; el formulario usa `novalidate` para evitar los mensajes del navegador; el JS también valida.
 - **UX**: tras guardar, el formulario se reinicia pero la fecha vuelve a hoy; el foco va al campo de tema.
@@ -34,6 +35,7 @@ No existen comandos de build, test, lint ni typecheck. Para verificar:
 - El cálculo de la racha construye un Set de días estudiados, elige el ancla (hoy o ayer) y recorre hacia atrás contando días consecutivos presentes.
 - La mejor racha usa ese mismo Set de días: lo ordena y recorre midiendo el tramo consecutivo más largo.
 - Los minutos de la semana se calculan con `getWeekRange()` (semana local de lunes a domingo que contiene hoy) y se suman con `countWeekMinutes()`; `updateWeekTotal()` los pinta.
+- Los días del mes se calculan reutilizando `getDayKeysSet()` (días únicos) y comparando el prefijo `"AAAA-MM"` del mes en curso con `getCurrentMonthPrefix()`; `countMonthDays()` los cuenta y `updateMonthDays()` los pinta.
 
 ## Forma de trabajar
 
