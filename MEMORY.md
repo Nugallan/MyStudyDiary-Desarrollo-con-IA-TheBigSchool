@@ -25,9 +25,15 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - Mes natural en curso (del 1 al último día del mes de hoy), incluidas fechas futuras del mismo mes, por coherencia con la semana.
 - Repo git en la rama `main`, con `.gitattributes` (`* text=auto eol=lf`) para evitar el ruido CRLF/LF de Windows.
 
+## Identidad visual
+
+- Cuaderno de estudio: papel claro, tinta azul-negra, renglones azules, regla roja al margen y subrayador amarillo para la racha.
+- Se descartó el diseño anterior (tarjetas oscuras con degradado, etiqueta en mayúsculas, emojis): era el patrón genérico de "SaaS de tarjetas".
+- Sin fuentes externas: serif del sistema (Georgia) para títulos/cifras y monoespaciada solo para los minutos.
+
 ## Aprendizajes y errores a evitar
 
-- (vacío por ahora)
+- En diseño: evitar emojis, etiquetas en mayúsculas y pilas de tarjetas idénticas con degradado y sombra; reservar un único gesto llamativo.
 
 ## Próximos pasos
 

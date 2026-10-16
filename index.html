@@ -13,11 +13,24 @@
     <h1>Diario de Estudio</h1>
 
     <section class="streak-card">
-      <p class="streak-label">Racha actual</p>
-      <p class="streak-value">🔥 <span id="streakCount">0</span></p>
-      <p class="best-streak">Mejor racha: <span id="bestStreakCount">0</span> 🏆</p>
-      <p class="week-total">Esta semana: <span id="weekMinutes">0</span></p>
-      <p class="month-days">Este mes: <span id="monthDays">0</span></p>
+      <div class="streak-hero">
+        <p class="streak-label">Racha actual</p>
+        <p class="streak-value"><span id="streakCount">0</span></p>
+      </div>
+      <dl class="stats">
+        <div class="stat">
+          <dt>Mejor racha</dt>
+          <dd><span id="bestStreakCount">0</span></dd>
+        </div>
+        <div class="stat">
+          <dt>Esta semana</dt>
+          <dd><span id="weekMinutes">0</span></dd>
+        </div>
+        <div class="stat">
+          <dt>Este mes</dt>
+          <dd><span id="monthDays">0</span></dd>
+        </div>
+      </dl>
     </section>
 
     <section class="form-card">
