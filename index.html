@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diario de Estudio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <main class="container">
+    <h1>Diario de Estudio</h1>
+
+    <section class="streak-card">
+      <p class="streak-label">Racha actual</p>
+      <p class="streak-value">🔥 <span id="streakCount">0</span></p>
+      <p class="best-streak">Mejor racha: <span id="bestStreakCount">0</span> 🏆</p>
+      <p class="week-total">Esta semana: <span id="weekMinutes">0</span></p>
+    </section>
+
+    <section class="form-card">
+      <h2>Nueva sesión</h2>
+      <form id="sessionForm" novalidate>
+        <div class="form-group">
+          <label for="dateInput">Fecha</label>
+          <input type="date" id="dateInput" required>
+        </div>
+
+        <div class="form-group">
+          <label for="topicInput">Tema</label>
+          <input type="text" id="topicInput" placeholder="Ej. Repaso de HTML" autocomplete="off" required>
+        </div>
+
+        <div class="form-group">
+          <label for="minutesInput">Minutos</label>
+          <input type="number" id="minutesInput" placeholder="Ej. 25" min="1" step="1" inputmode="numeric"
+            required>
+        </div>
+
+        <button type="submit" class="btn-save">Guardar sesión</button>
+      </form>
+    </section>
+
+    <section class="list-card">
+      <h2>Mis sesiones</h2>
+      <ul id="sessionsList" class="sessions-list"></ul>
+      <p id="emptyState" class="empty-state">Aún no hay sesiones registradas.</p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
