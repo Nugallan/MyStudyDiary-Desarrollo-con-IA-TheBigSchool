@@ -5,12 +5,12 @@
 Web estática y sencilla de "Diario de Estudio" para registrar sesiones de estudio y ver la racha actual. HTML, CSS y JavaScript puros, sin frameworks, sin herramientas de compilación y sin dependencias.
 
 - **Ubicación**: `MyStudyDiary/` (dentro de este workspace)
-- **Archivos**: solo `index.html`, `styles.css` y `app.js`
+- **Archivos**: `index.html`, `styles.css` y `app.js`, más los tests `*.test.js`
 - **Ejecución**: abriendo `index.html` directamente en el navegador (funciona con `file://`)
 
 ## Ejecutar / verificar
 
-No existen comandos de build, test, lint ni typecheck. Para verificar:
+No hay build, lint ni typecheck. La lógica pura se prueba con `node --test` (sin instalar dependencias) y el resto se verifica a mano en el navegador:
 
 1. Abrir `index.html` en el navegador (doble clic)
 2. Añadir una sesión con fecha (por defecto hoy), tema y minutos > 0
@@ -53,7 +53,7 @@ No existen comandos de build, test, lint ni typecheck. Para verificar:
 
 ## Comandos
 
-- Tests: `node --test`
+- Tests: `node --test` (runner incluido en Node; sin instalar dependencias)
 
 ## Reglas
 
@@ -68,5 +68,6 @@ No existen comandos de build, test, lint ni typecheck. Para verificar:
 
 ## Verificación
 
-- No hay tests automáticos. Después de cada cambio, verifica con el MCP de Chrome DevTools: abre `index.html`, prueba la funcionalidad, revisa la consola y comprueba la vista móvil.
+- La lógica pura (fechas, rachas y estadísticas) se cubre con `node --test`; no se avanza con tests en rojo.
+- Después de cada cambio, verifica con el MCP de Chrome DevTools: abre `index.html`, prueba la funcionalidad, revisa la consola y comprueba la vista móvil.
 - Para empezar de cero: DevTools -> Application -> Local Storage -> borrar la clave `diario-estudio-sessions`.

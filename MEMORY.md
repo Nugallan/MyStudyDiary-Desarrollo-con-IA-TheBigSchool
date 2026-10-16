@@ -25,6 +25,7 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - "Días del mes" cuenta días únicos (no sesiones): reutiliza `getDayKeysSet()` y compara el prefijo `"AAAA-MM"` del mes de hoy; así dos sesiones el mismo día cuentan una vez.
 - Mes natural en curso (del 1 al último día del mes de hoy), incluidas fechas futuras del mismo mes, por coherencia con la semana.
 - Repo git en la rama `main`, con `.gitattributes` (`* text=auto eol=lf`) para evitar el ruido CRLF/LF de Windows.
+- Los tests son la puerta para la lógica pura (`node --test`, incluido en Node, sin instalar paquetes); la verificación manual en el navegador sigue para lo visual.
 
 ## Identidad visual
 
