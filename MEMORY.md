@@ -20,6 +20,7 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - Cuentan las sesiones con fecha dentro del rango, incluida una futura de la misma semana: no hay concepto de "planificado" y todo se deriva de los datos.
 - Los minutos se muestran con pluralización (`1 minuto` / `125 minutos`) para ser coherentes con la lista.
 - El total se muestra dentro de la tarjeta de racha, bajo la mejor racha, sin crear estructura nueva.
+- Repo git en la rama `main`, con `.gitattributes` (`* text=auto eol=lf`) para evitar el ruido CRLF/LF de Windows.
 
 ## Aprendizajes y errores a evitar
 
