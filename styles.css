@@ -359,10 +359,19 @@ input:focus-visible {
   }
 
   .stats {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
     border-left: none;
     border-top: 1px solid var(--rule);
     padding-left: 0;
     padding-top: 0.9rem;
+  }
+
+  .stat {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
   }
 }
 

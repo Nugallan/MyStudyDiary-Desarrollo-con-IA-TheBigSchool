@@ -31,6 +31,7 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - Mapa de calor: ventana fija de 12 semanas naturales (lunes–domingo) que termina en la semana de hoy, con umbrales de minutos enteros 0 / 1–29 / 30–59 / 60–119 / ≥120; reglas fáciles de explicar y de testear, sin configuración.
 - El detalle del día se muestra por celda (`aria-label` + línea de detalle) con puntero y toque; se renuncia a la navegación por teclado celda a celda para no añadir 84 paradas de tabulador.
 - En colores forzados los niveles se distinguen por el trazo (punteado → discontinuo → 2 px → 3 px → relleno): Chrome fuerza `background-image` a `none` y las tramas no se veían.
+- En móvil (≤560 px) los tres datos de `.stats` se apilan a una columna con la etiqueta a la izquierda y la cifra a la derecha: en 3 columnas de ~83 px la cifra "135 minutos" se partía en 2 líneas.
 
 ## Identidad visual
 
@@ -44,6 +45,5 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 
 ## Próximos pasos
 
-- Spec 001 "mapa de calor de constancia": **completa** (T1–T6). `logic.js` + `logic.test.js` (`node --test` 20/20) y la interfaz listos; verificado con chrome-devtools (84 celdas, niveles, detalle, consola limpia y 375 px sin desbordes).
-- Probado con chrome-devtools: 3 sesiones consecutivas → racha 3, mejor 3, semana 135 min, mes 3 días, persistencia OK.
-- Pendiente (ajeno a la spec): en móvil (375 px) los tres datos de `.stats` van en 3 columnas y "135 minutos" se parte en 2 líneas; valorar apilar `.stats` a 1 columna en el breakpoint de 560 px.
+- Spec 001 "mapa de calor de constancia": **completa** (T1–T6). `logic.js` + `logic.test.js` (`node --test` 20/20) y la interfaz listos; verificado con chrome-devtools (84 celdas, niveles, detalle, consola limpia, 375 px sin desbordes) y persistencia OK (3 sesiones → racha 3, mejor 3, semana 135 min, mes 3 días).
+- Arreglado el apretado de `.stats` en móvil: a 375 px una columna, las tres cifras en una línea y sin desbordes (a 1280 px sigue en 3 columnas).
