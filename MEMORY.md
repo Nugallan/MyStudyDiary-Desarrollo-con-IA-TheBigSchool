@@ -47,4 +47,4 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 
 - Spec 001 "mapa de calor": **completa** (T1–T6) y auditada RF por RF el 2026-10-17: todo cumplido; único hueco, la leyenda no decía "sin estudio (0 min)", ya corregido. `node --test` 20/20; verificado con chrome-devtools (84 celdas, niveles, detalle, consola limpia, 375 px sin desbordes).
 - Arreglado el apretado de `.stats` en móvil: a 375 px una columna, las tres cifras en una línea y sin desbordes (a 1280 px sigue en 3 columnas).
-- README.md y LICENSE (Apache 2.0, titular MoureDev) listos para publicar; la configuración de IA (`.agents/`, `.opencode/`, `opencode.json`, `skills-lock.json`) queda fuera del repo por `.gitignore`. Pendiente: crear el repositorio en GitHub y añadir el remoto (todavía no hay ninguno).
+- README.md y LICENSE (Apache 2.0, titular MoureDev) y la captura `assets/captura-movil.png` (vista de móvil 375 px, hecha con datos de ejemplo); la configuración de IA (`.agents/`, `.opencode/`, `opencode.json`, `skills-lock.json`) queda fuera del repo por `.gitignore`. Repositorio creado y subido a GitHub.

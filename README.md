@@ -2,6 +2,8 @@
 
 Web estática desarrollada con opencode para registrar tus sesiones de estudio y ver tu constancia de un vistazo: racha actual, mejor racha, minutos de la semana, días del mes y un mapa de calor de las últimas 12 semanas.
 
+<img src="assets/captura-movil.png" alt="Vista de móvil del Diario de Estudio" width="320">
+
 ## Funcionalidades
 
 - **Registrar sesiones**: fecha, tema y minutos.
@@ -27,6 +29,7 @@ Web estática desarrollada con opencode para registrar tus sesiones de estudio y
 | `app.js`        | Interfaz: formulario, lista, estadísticas y mapa            |
 | `logic.js`      | Lógica pura (fechas, rachas, estadísticas y mapa de calor)  |
 | `logic.test.js` | Tests de la lógica con el runner de Node                    |
+| `assets/`       | Capturas de pantalla para el README                         |
 | `docs/`         | Constitución del proyecto                                   |
 | `specs/`        | Especificaciones, planes y tareas (Spec-Driven Development) |
 
