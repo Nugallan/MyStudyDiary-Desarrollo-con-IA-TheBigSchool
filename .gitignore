@@ -1,2 +1,8 @@
 # Capturas de verificación con Chrome DevTools (solo en la raíz)
 /*.png
+
+# Configuración local de herramientas de IA (no forma parte de la web publicada)
+/.agents/
+/.opencode/
+/opencode.json
+/skills-lock.json
