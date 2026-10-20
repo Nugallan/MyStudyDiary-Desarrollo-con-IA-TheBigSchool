@@ -33,6 +33,22 @@
       </dl>
     </section>
 
+    <section class="goal-card" aria-labelledby="goalTitle">
+      <h2 id="goalTitle">Objetivo semanal</h2>
+      <p id="goalProgress" class="goal-progress" aria-live="polite">0 minutos · Sin objetivo · Fija uno</p>
+      <div id="goalBar" class="goal-bar">
+        <div id="goalFill" class="goal-fill" aria-hidden="true"></div>
+      </div>
+      <p id="goalDone" class="goal-done hidden">¡Objetivo cumplido!</p>
+      <form id="goalForm" novalidate>
+        <div class="form-group">
+          <label for="goalInput">Minutos por semana</label>
+          <input type="number" id="goalInput" min="1" step="1" inputmode="numeric" required>
+        </div>
+        <button type="submit" class="btn-save">Guardar objetivo</button>
+      </form>
+    </section>
+
     <section class="heat-card">
       <h2>Últimas 12 semanas</h2>
       <div id="heatmap" class="heatmap" role="group" aria-label="Días estudiados de las últimas 12 semanas"></div>

@@ -7,6 +7,7 @@
  */
 
 const ISO_DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
+const GOAL_PATTERN = /^[1-9][0-9]*$/;
 
 function toISODate(date) {
   const year = date.getFullYear();
@@ -53,6 +54,12 @@ function getWeekStartISO(todayISO) {
   return toISODate(addDays(date, -offsetToMonday));
 }
 
+function getWeekEndISO(todayISO) {
+  const weekStartISO = getWeekStartISO(todayISO);
+  if (!weekStartISO) return null;
+  return toISODate(addDays(parseISODate(weekStartISO), 6));
+}
+
 function formatDisplayDate(isoDate) {
   const parts = String(isoDate).split("-");
   if (parts.length !== 3) return isoDate;
@@ -92,6 +99,66 @@ function minutesByDay(sessions) {
   return totals;
 }
 
+function countWeekMinutes(sessions, todayISO) {
+  const startISO = getWeekStartISO(todayISO);
+  if (!startISO) return 0;
+  const endISO = getWeekEndISO(todayISO);
+  const totals = minutesByDay(sessions);
+
+  let total = 0;
+  for (const day of Object.keys(totals)) {
+    if (day >= startISO && day <= endISO) {
+      total += totals[day];
+    }
+  }
+  return total;
+}
+
+function buildWeeklyProgress(sessions, goal, todayISO) {
+  const minutes = countWeekMinutes(sessions, todayISO);
+
+  if (goal === null || goal === undefined) {
+    return {
+      minutes,
+      goal: null,
+      ratio: null,
+      cappedRatio: 0,
+      done: false,
+      percent: null
+    };
+  }
+
+  const ratio = minutes / goal;
+  return {
+    minutes,
+    goal,
+    ratio,
+    cappedRatio: Math.min(1, ratio),
+    done: minutes >= goal,
+    percent: Math.min(100, Math.round((100 * minutes) / goal))
+  };
+}
+
+function parseGoal(rawValue) {
+  if (typeof rawValue !== "string") return null;
+  if (!GOAL_PATTERN.test(rawValue)) return null;
+
+  const value = Number(rawValue);
+  if (value > Number.MAX_SAFE_INTEGER) return null;
+  return value;
+}
+
+function formatGoalText(minutes, goal) {
+  if (goal === null || goal === undefined) {
+    return `${formatMinutes(minutes)} · Sin objetivo · Fija uno`;
+  }
+  return `${formatMinutes(minutes)} de ${formatMinutes(goal)}`;
+}
+
+function formatGoalValueText(progress) {
+  return `${formatMinutes(progress.minutes)} de ${formatMinutes(progress.goal)}, ${progress.percent} %`;
+}
+
 function buildHeatMap(sessions, todayISO) {
   const weekStartISO = getWeekStartISO(todayISO);
   if (!weekStartISO) {
@@ -126,11 +193,17 @@ if (typeof module !== "undefined" && module.exports) {
     isValidISODate,
     addDays,
     getWeekStartISO,
+    getWeekEndISO,
     formatDisplayDate,
     classifyLevel,
     formatMinutes,
     formatDetail,
     minutesByDay,
+    countWeekMinutes,
+    buildWeeklyProgress,
+    parseGoal,
+    formatGoalText,
+    formatGoalValueText,
     buildHeatMap
   };
 }

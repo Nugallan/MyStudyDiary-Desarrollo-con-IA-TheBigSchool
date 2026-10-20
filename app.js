@@ -1,4 +1,5 @@
 const STORAGE_KEY = "diario-estudio-sessions";
+const GOAL_STORAGE_KEY = "diario-estudio-goal";
 
 const form = document.getElementById("sessionForm");
 const dateInput = document.getElementById("dateInput");
@@ -12,8 +13,15 @@ const sessionsListEl = document.getElementById("sessionsList");
 const emptyStateEl = document.getElementById("emptyState");
 const heatmapEl = document.getElementById("heatmap");
 const heatmapDetailEl = document.getElementById("heatmapDetail");
+const goalForm = document.getElementById("goalForm");
+const goalInput = document.getElementById("goalInput");
+const goalProgressEl = document.getElementById("goalProgress");
+const goalBarEl = document.getElementById("goalBar");
+const goalFillEl = document.getElementById("goalFill");
+const goalDoneEl = document.getElementById("goalDone");
 
 let sessions = [];
+let goal = null;
 
 function getTodayISO() {
   const now = new Date();
@@ -189,28 +197,79 @@ function countBestStreak() {
   return best;
 }
 
-function getWeekRange() {
-  const now = new Date();
-  const offsetToMonday = (now.getDay() + 6) % 7;
-  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - offsetToMonday);
-  const end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 6);
-  return { startISO: toISODate(start), endISO: toISODate(end) };
-}
-
-function countWeekMinutes() {
-  const { startISO, endISO } = getWeekRange();
-  let total = 0;
-  for (const session of sessions) {
-    if (session.date >= startISO && session.date <= endISO) {
-      total += Number(session.minutes) || 0;
-    }
-  }
-  return total;
-}
-
 function updateWeekTotal() {
-  const total = countWeekMinutes();
-  weekMinutesEl.textContent = `${total} ${total === 1 ? "minuto" : "minutos"}`;
+  const total = countWeekMinutes(sessions, getTodayISO());
+  weekMinutesEl.textContent = formatMinutes(total);
+}
+
+function loadGoal() {
+  try {
+    return parseGoal(localStorage.getItem(GOAL_STORAGE_KEY));
+  } catch (error) {
+    console.warn("No se ha podido cargar el objetivo guardado", error);
+    return null;
+  }
+}
+
+function saveGoal(value) {
+  try {
+    localStorage.setItem(GOAL_STORAGE_KEY, String(value));
+  } catch (error) {
+    console.warn("No se ha podido guardar el objetivo", error);
+  }
+}
+
+function setGoalBarAccessible(progress) {
+  goalBarEl.setAttribute("role", "progressbar");
+  goalBarEl.setAttribute("aria-labelledby", "goalTitle");
+  goalBarEl.setAttribute("aria-valuemin", "0");
+  goalBarEl.setAttribute("aria-valuemax", String(progress.goal));
+  goalBarEl.setAttribute("aria-valuenow", String(Math.min(progress.minutes, progress.goal)));
+  goalBarEl.setAttribute("aria-valuetext", formatGoalValueText(progress));
+  goalFillEl.removeAttribute("aria-hidden");
+}
+
+function resetGoalBar() {
+  goalBarEl.removeAttribute("role");
+  goalBarEl.removeAttribute("aria-labelledby");
+  goalBarEl.removeAttribute("aria-valuemin");
+  goalBarEl.removeAttribute("aria-valuemax");
+  goalBarEl.removeAttribute("aria-valuenow");
+  goalBarEl.removeAttribute("aria-valuetext");
+  goalFillEl.setAttribute("aria-hidden", "true");
+  goalFillEl.style.width = "0%";
+}
+
+function renderGoal() {
+  const progress = buildWeeklyProgress(sessions, goal, getTodayISO());
+  goalProgressEl.textContent = formatGoalText(progress.minutes, progress.goal);
+
+  if (progress.goal === null) {
+    goalInput.value = "";
+    resetGoalBar();
+  } else {
+    goalInput.value = String(progress.goal);
+    setGoalBarAccessible(progress);
+    goalFillEl.style.width = `${progress.cappedRatio * 100}%`;
+  }
+
+  goalDoneEl.classList.toggle("hidden", !progress.done);
+}
+
+function handleGoalSubmit(event) {
+  event.preventDefault();
+
+  const value = Number(goalInput.value);
+  if (goalInput.value === "" || !Number.isSafeInteger(value) || value < 1) {
+    goalInput.focus();
+    return;
+  }
+
+  goal = value;
+  saveGoal(goal);
+  renderGoal();
+  updateWeekTotal();
+  goalInput.focus();
 }
 
 function getCurrentMonthPrefix() {
@@ -305,20 +364,24 @@ function handleSubmit(event) {
   updateWeekTotal();
   updateMonthDays();
   updateHeatMap();
+  renderGoal();
   topicInput.focus();
 }
 
 function init() {
   setDefaultDate();
   sessions = loadSessions();
+  goal = loadGoal();
   renderSessions();
   updateStreaks();
   updateWeekTotal();
   updateMonthDays();
   updateHeatMap();
+  renderGoal();
 }
 
 form.addEventListener("submit", handleSubmit);
+goalForm.addEventListener("submit", handleGoalSubmit);
 
 heatmapEl.addEventListener("pointerover", (event) => {
   const cell = event.target.closest(".heat-cell");

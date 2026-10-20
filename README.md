@@ -1,6 +1,6 @@
 # Diario de Estudio
 
-Web estática desarrollada con opencode para registrar tus sesiones de estudio y ver tu constancia de un vistazo: racha actual, mejor racha, minutos de la semana, días del mes y un mapa de calor de las últimas 12 semanas.
+Web estática desarrollada con opencode para registrar tus sesiones de estudio y ver tu constancia de un vistazo: racha actual, mejor racha, minutos de la semana frente a un objetivo semanal, días del mes y un mapa de calor de las últimas 12 semanas.
 
 <img src="assets/captura-movil.png" alt="Vista de móvil del Diario de Estudio" width="320">
 
@@ -9,10 +9,20 @@ Web estática desarrollada con opencode para registrar tus sesiones de estudio y
 - **Registrar sesiones**: fecha, tema y minutos.
 - **Racha actual** y **mejor racha** (el tramo más largo del historial).
 - **Minutos de la semana** en curso (semana natural de lunes a domingo).
+- **Objetivo semanal**: fija cuántos minutos quieres estudiar cada semana y sigue el progreso con una barra que nunca supera el 100 %; al alcanzar la meta se llena con el subrayador amarillo y aparece "¡Objetivo cumplido!". Se crea y edita en cualquier momento sin recargar.
 - **Días estudiados del mes** en curso.
 - **Mapa de calor de constancia**: las últimas 12 semanas, un día por celda y cinco niveles de intensidad según los minutos del día.
-- **Persistencia local**: los datos se guardan en el `localStorage` del navegador.
+- **Persistencia local**: los datos se guardan en el `localStorage` del navegador (sesiones y objetivo).
 - **Fechas locales**: todo se calcula en la zona horaria del usuario.
+- **Accesible**: barra de progreso con nombre accesible, navegación por teclado y contraste acorde a WCAG AA.
+
+## Tests
+
+La lógica pura (fechas, rachas, estadísticas, mapa de calor y objetivo semanal) se cubre con el runner de tests incluido en Node, sin instalar nada:
+
+```bash
+node --test
+```
 
 ## Cómo usarlo
 
@@ -26,8 +36,8 @@ Web estática desarrollada con opencode para registrar tus sesiones de estudio y
 | --------------- | ----------------------------------------------------------- |
 | `index.html`    | Estructura de la página                                     |
 | `styles.css`    | Estilos (tema "cuaderno de estudio")                        |
-| `app.js`        | Interfaz: formulario, lista, estadísticas y mapa            |
-| `logic.js`      | Lógica pura (fechas, rachas, estadísticas y mapa de calor)  |
+| `app.js`        | Interfaz: formulario, lista, estadísticas, objetivo y mapa  |
+| `logic.js`      | Lógica pura (fechas, rachas, estadísticas, mapa de calor y objetivo semanal) |
 | `logic.test.js` | Tests de la lógica con el runner de Node                    |
 | `assets/`       | Capturas de pantalla para el README                         |
 | `docs/`         | Constitución del proyecto                                   |

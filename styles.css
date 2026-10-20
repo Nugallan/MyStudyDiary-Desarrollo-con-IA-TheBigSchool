@@ -66,6 +66,7 @@ h2 {
 
 /* Las secciones se separan con renglones, como en un cuaderno. */
 .streak-card,
+.goal-card,
 .heat-card,
 .form-card,
 .list-card {
@@ -167,14 +168,14 @@ input {
   color: var(--ink);
   background: transparent;
   border: none;
-  border-bottom: 1.5px solid var(--rule-strong);
+  border-bottom: 1.5px solid var(--ink-soft);
   border-radius: 0;
   padding: 0.4rem 0.1rem;
   transition: border-color 150ms ease, background-color 150ms ease;
 }
 
 input::placeholder {
-  color: #6e8087;
+  color: var(--ink-soft);
 }
 
 input:focus {
@@ -353,6 +354,52 @@ input:focus-visible {
   gap: 0.35rem;
 }
 
+/* Objetivo: una cifra a lápiz y un subrayador que se va llenando. */
+.goal-card {
+  gap: 0.9rem;
+}
+
+.goal-progress {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.goal-bar {
+  height: 0.9rem;
+  background: transparent;
+  border: 1px solid var(--ink-soft);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.goal-fill {
+  width: 0;
+  height: 100%;
+  background: var(--highlight);
+  transition: width 200ms ease;
+}
+
+.goal-done {
+  align-self: flex-start;
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  color: var(--ink);
+  background: var(--highlight);
+  padding: 0 0.25em;
+}
+
+.goal-done.hidden {
+  display: none;
+}
+
+#goalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-top: 0.25rem;
+}
+
 @media (max-width: 560px) {
   .streak-card {
     grid-template-columns: 1fr;
@@ -372,6 +419,16 @@ input:focus-visible {
     align-items: baseline;
     justify-content: space-between;
     gap: 0.75rem;
+  }
+
+  #goalForm .form-group {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  #goalForm .btn-save {
+    align-self: stretch;
+    text-align: center;
   }
 }
 
@@ -413,6 +470,22 @@ input:focus-visible {
   .heat-cell.level-4,
   .heat-swatch.level-4 {
     background: CanvasText;
+    border: 1px solid CanvasText;
+  }
+
+  /* La barra del objetivo no depende del fondo: la pista se marca con el contorno
+     y el relleno con un trazo, ambos con colores del sistema. */
+  .goal-bar {
+    border: 1px solid CanvasText;
+  }
+
+  .goal-fill {
+    background: CanvasText;
+  }
+
+  .goal-done {
+    background: Canvas;
+    color: CanvasText;
     border: 1px solid CanvasText;
   }
 }
